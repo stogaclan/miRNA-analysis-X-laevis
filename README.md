@@ -119,8 +119,7 @@ current folder, which is called out each time.
 
 ## 4. Download and format the miRNA reference
 
-Two files: **mature** (the ~22 nt miRNAs we count) and **hairpin** (the ~70 nt
-precursors they're cut out of).
+Two files: **mature** and **hairpin**.
 
 ```bash
 $ mkdir -p ~/xla_mirna_analysis/mirna_ref
@@ -132,17 +131,16 @@ $ wget https://mirbase.org/download/hairpin.fa
 
 ### Keep only *X. laevis*
 
-These files contain every species in miRBase. Leaving mouse and fly miRNAs in
-invites spurious cross-species matches, so pull out the `xla` entries:
+These files contain every species in miRBase. 
 
+Take only X. laevis
 ```bash
 $ awk '/^>/ {p = ($0 ~ /^>xla-/)} p' mature.fa  > mature_xla.fa
 $ awk '/^>/ {p = ($0 ~ /^>xla-/)} p' hairpin.fa > hairpin_xla.fa
 ```
 
 That awk reads as: at every header line, set a flag to whether it starts with
-`>xla-`; print the line whenever the flag is on. Because the flag persists until
-the next header, the sequence lines underneath come along too.
+`>xla-`; print the line whenever the flag is on. 
 
 ### Remove whitespace from the IDs
 
@@ -228,9 +226,7 @@ Decompress if files gzipped, because **miRDeep2 cannot read gzipped files**:
 $ gunzip -k *.gz
 ```
 
-`-k` keeps the `.gz` originals. Without it they're deleted, and re-downloading from
-the sequencing facility is a bad afternoon. Uncompressed FASTQ is roughly 4×
-larger, so check your disk space.
+`-k` keeps the `.gz` originals. 
 
 ---
 
@@ -259,9 +255,6 @@ to the genome.
 
 These are QIAseq miRNA libraries, so the 3′ adapter is `AACTGTAGGCACCATCAAT`.
 
-**Check this against your FastQC report before running anything.** The adapter
-should appear in the "Overrepresented sequences" table. A wrong adapter means
-nothing is trimmed and every count comes out zero.
 
 ### Run one sample
 
@@ -301,14 +294,10 @@ $ mapper.pl \
 # o = threads for bowtie
 ```
 
-`mapper.pl` prints a stats table at the end. The number to look at is the
-proportion of reads mapping to the genome: **50–80% is normal** for the NPSC
-libraries, and the fluid samples will sit lower. Below ~20% in an NPSC sample
-means the wrong adapter or the wrong genome.
 
 ### Run the other eleven
 
-Same command, one folder per sample. A loop saves typing it twelve times:
+Same command, one folder per sample.
 
 ```bash
 $ for i in $(seq 1 12); do
@@ -323,8 +312,6 @@ $ for i in $(seq 1 12); do
         -v -o 4
 done
 ```
-
-Expect one to a few hours for all twelve.
 
 ---
 
@@ -377,8 +364,7 @@ xla-let-7b-3p   5.00        xla-let-7b  5.00        5.00        0.37
 ```
 
 - **Counts are fractional.** That's `-W`. A read mapping to three precursors
-  contributes a third to each instead of a whole count to all three. The merge
-  script rounds them.
+  contributes a third to each instead of a whole count to all three. 
 - **The `seq(norm)` column is miRDeep2's own normalisation. Ignore it.** DESeq2
   normalises internally and needs raw counts.
 
