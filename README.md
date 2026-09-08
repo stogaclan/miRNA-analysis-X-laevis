@@ -187,8 +187,7 @@ $ remove_white_space_in_id.pl XENLA_10.1_genome.fa > XENLA_10.1_genome_renamed.f
 
 ### Build the bowtie index
 
-miRDeep2 uses **bowtie 1**, not bowtie2 or STAR — 22 nt reads don't need a
-splice-aware aligner.
+miRDeep2 uses **bowtie 1**.
 
 ```bash
 $ mkdir -p ~/xla_mirna_analysis/genome_ref/genome_index
