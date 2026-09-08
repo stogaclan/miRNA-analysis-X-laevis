@@ -1,10 +1,7 @@
 # miRNA-seq analysis in *Xenopus laevis*
 
-A step-by-step guide from raw FASTQ files to a count matrix and a list of
-differentially expressed miRNAs.
-
-Written for people who have never used a command line. Every command is meant to
-be copied and run one at a time. Nothing here needs a cluster or a job scheduler.
+Guide from raw FASTQ files to a count matrix and a list of
+differentially expressed miRNAs using mirdeep2. 
 
 Lines beginning with `$` are commands you type — don't type the `$` itself.
 Lines beginning with `#` are comments. Everything else is output.
