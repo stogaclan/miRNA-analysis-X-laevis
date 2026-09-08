@@ -198,8 +198,9 @@ miRDeep2 uses **bowtie 1**.
 $ mkdir -p ~/xla_mirna_analysis/genome_ref/genome_index
 
 $ bowtie-build XENLA_10.1_genome_renamed.fa \
-    ~/xla_mirna_analysis/genome_ref/genome_index/bowtie_index_XENLA_10.1
+    ~/xla_mirna_analysis/genome_ref/genome_index/bowtie_index_XENLA_10.1 \ --threads 16
 ```
+change --threads based on computing power
 
 You only do it once. 
 
