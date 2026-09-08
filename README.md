@@ -464,7 +464,8 @@ XS12,fluid,dpt6
 ```
 
 The sample names must match the column headers of `mirna_count_matrix.tsv`
-exactly. 
+exactly, and the `tissue` values must match what section 12 asks for — `npsc` and
+`fluid`, lower case. Don't put spaces after the commas.
 
 > **Why `dpt2` and not `2dpt`.** R prefixes names that start with a digit, so
 > `2dpt` silently becomes `X2dpt` in DESeq2's output and your contrast names stop
@@ -534,9 +535,16 @@ plotPCA(vsd, intgroup = "condition")
 > transformation, but `vst()` needs at least 1,000 features by default and will
 > error on a few hundred miRNAs.
 
+You want the two replicates of each timepoint sitting near each other, and the
+timepoints separating. If a single replicate sits far from its partner, note it
+before you read anything into the results — at n=2 there is no way to tell an
+outlier from real variation statistically, so the plot is the check.
+
 ### Get the contrasts
 
-
+All three comparisons come from the **same fitted model**. Don't re-run DESeq2 on
+subsets — you'd lose the shared dispersion estimates, which is what makes a
+two-replicate design analysable at all.
 
 ```r
 res <- results(dds_npsc, contrast = c("condition", "dpt2", "uninjured"))
