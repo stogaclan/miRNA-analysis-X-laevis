@@ -55,6 +55,13 @@ Two features of this design matter later:
 
 ## 2. Install the software
 
+Ran using Unix/Linux. 
+If on windows use Windows Subsystem for Linux (WSL): 
+```bash
+wsl -d Ubuntu
+```
+
+
 Install [Miniforge](https://github.com/conda-forge/miniforge) if you don't have
 conda, then create one environment with everything in it:
 
