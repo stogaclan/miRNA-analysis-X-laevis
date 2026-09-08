@@ -464,8 +464,7 @@ XS12,fluid,dpt6
 ```
 
 The sample names must match the column headers of `mirna_count_matrix.tsv`
-exactly. Record lineage even though we can't correct for it at n=2 — you'll want
-to know if it explains the PCA.
+exactly. 
 
 > **Why `dpt2` and not `2dpt`.** R prefixes names that start with a digit, so
 > `2dpt` silently becomes `X2dpt` in DESeq2's output and your contrast names stop
@@ -529,20 +528,15 @@ Do this **before** looking at any list of miRNAs.
 ```r
 vsd <- varianceStabilizingTransformation(dds_npsc, blind = TRUE)
 plotPCA(vsd, intgroup = "condition")
-plotPCA(vsd, intgroup = "lineage")
 ```
 
 > Use `varianceStabilizingTransformation()`, not `vst()`. They're the same
 > transformation, but `vst()` needs at least 1,000 features by default and will
 > error on a few hundred miRNAs.
 
-If replicates separate by lineage rather than timepoint, say so in your write-up.
-
 ### Get the contrasts
 
-All three comparisons come from the **same fitted model**. Don't re-run DESeq2 on
-subsets — you'd lose the shared dispersion estimates, which is what makes a
-two-replicate design analysable at all.
+
 
 ```r
 res <- results(dds_npsc, contrast = c("condition", "dpt2", "uninjured"))
@@ -566,25 +560,11 @@ for the other tissue — six comparisons in total.
 
 `scripts/deseq2.R` runs all six and writes the volcano plots and heatmaps.
 
-### Read this before quoting a number
-
-The filter uses **`pvalue`, not `padj`**. Everywhere else that would be a mistake.
+The filter uses **`pvalue`, not `padj`**. 
 
 With two replicates per group, DESeq2 has almost no information about within-group
-variability for any individual miRNA. The per-miRNA p-values are noisy. Run
-Benjamini–Hochberg across several hundred of them and essentially nothing
-survives — not because nothing changed, but because the experiment can't
-demonstrate that anything did.
+variability for any individual miRNA. The per-miRNA p-values are noisy. There is a high false-positive rate. This is exploratory. 
 
-So we're making an explicit trade: a high false-positive rate in exchange for a
-ranked candidate list. That means:
-
-- These are **candidates**, not differentially expressed miRNAs. Word it that way
-  in figures, talks, and the thesis.
-- Report the analysis as **exploratory** and state n=2 plainly.
-- `padj` is in the full results table. If anything survives correction, that's a
-  much stronger claim — pull it out separately.
-- Nothing here is a finding until it's validated by qPCR in independent animals.
 
 ---
 
