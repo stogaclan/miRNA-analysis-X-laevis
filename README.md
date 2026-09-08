@@ -243,24 +243,6 @@ $ multiqc ~/xla_mirna_analysis/qc -o ~/xla_mirna_analysis/qc
 
 Open `~/xla_mirna_analysis/qc/multiqc_report.html` in a browser.
 
-### What to look for in a small RNA library
-
-A miRNA library fails several FastQC modules by design. This is where the report
-looks alarming if you're used to mRNA-seq.
-
-| What you see | What it means |
-|---|---|
-| "Per base sequence content" fails | Expected. The first ~22 bases are miRNA, not random fragments. |
-| "Overrepresented sequences" fails | Expected. A few miRNAs dominate, and the adapter is overrepresented. |
-| Adapter content rising toward 100% | Expected — this is the point. It also confirms the adapter for section 8. |
-| Very high duplication | Expected. Millions of copies of the same 22 nt sequence are real signal. |
-| No 21–23 nt peak after trimming | ⚠️ Investigate. Wrong adapter, or a failed library. |
-| Fewer than ~5 million reads | ⚠️ Low. Note it, especially for the fluid samples. |
-
-Two things genuinely matter: total read count, and the length peak after trimming.
-Spinal cord fluid is low-input and extracellular, so those libraries will
-legitimately look worse than the NPSC ones.
-
 ---
 
 ## 8. Map the reads with `mapper.pl`
