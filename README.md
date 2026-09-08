@@ -169,8 +169,6 @@ $ grep -c ">" mature_xla_renamed.fa
 You should see a bare `>xla-let-7a-5p` with nothing after it, and a few hundred
 sequences.
 
-> The sequences are still RNA (`U`) while your reads are DNA (`T`). You don't
-> need to convert them — miRDeep2 handles that internally.
 
 ---
 
@@ -223,8 +221,7 @@ XS11_S11_R1_001.fastq.gz  XS2_S2_R1_001.fastq.gz  XS5_S5_R1_001.fastq.gz  XS8_S8
 XS12_S12_R1_001.fastq.gz  XS3_S3_R1_001.fastq.gz  XS6_S6_R1_001.fastq.gz  XS9_S9_R1_001.fastq.gz
 ```
 
-Run the QC in section 7 first — FastQC reads compressed files directly. Then
-decompress, because **miRDeep2 cannot read gzipped files**:
+Decompress if files gzipped, because **miRDeep2 cannot read gzipped files**:
 
 ```bash
 $ gunzip -k *.gz
